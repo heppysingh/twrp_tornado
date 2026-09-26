@@ -1,0 +1,18 @@
+service droidspacesd /system/bin/droidspaces daemon --foreground
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+service ubuntu-droidspaces /system/bin/sh /system/bin/boot-ubuntu.sh
+    user root
+    group root
+    oneshot
+    disabled
+    seclabel u:r:recovery:s0
+
+on boot
+    start droidspacesd
+
+on property:init.svc.droidspacesd=running
+    start ubuntu-droidspaces
